@@ -5,3 +5,4 @@ RUN wget -O /tmp/css-plugin.zip https://sourceforge.net/projects/geoserver/files
     unzip /tmp/css-plugin.zip -d /tmp/x &&\
     mv /tmp/x/*.jar /usr/local/tomcat/webapps/geoserver/WEB-INF/lib/ &&\
     rm -rf /tmp/x /tmp/css-plugin.zip
+COPY web.xml /usr/local/tomcat/conf/
