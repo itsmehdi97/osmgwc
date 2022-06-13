@@ -88,6 +88,14 @@ insert into osm.waterway(osm_id, name, waterway, geom)
   FROM planet_osm_line
   WHERE planet_osm_line.waterway = ANY (ARRAY['drain'::text, 'canal'::text, 'waterfall'::text, 'river'::text, 'stream'::text, 'yes'::text]);
 -----------------------------------------
+insert into osm.boundary(osm_id, name, uppername, geom) 
+	SELECT planet_osm_polygon.osm_id,
+    planet_osm_polygon.name as name,
+    upper(planet_osm_polygon.name) AS uppername,
+    st_multi(planet_osm_polygon.way)::geometry(MultiPolygon, 0) as way
+  FROM planet_osm_polygon
+  WHERE planet_osm_polygon.admin_level = '2'::text AND planet_osm_polygon.boundary = 'administrative'::text;
+
 insert into osm.administrative_2(osm_id, name, uppername, geom) 
     SELECT planet_osm_polygon.osm_id,
       planet_osm_polygon.name as name,
